@@ -116,7 +116,7 @@
     CGFloat width  = CGRectGetWidth(self.bounds);
     CGFloat height = CGRectGetHeight(self.bounds);
     
-    CGFloat offsetCenterY = IS_58INCH ? 7.5f + 20 : kAdaptationRation * 7.5f;
+    CGFloat offsetCenterY = IS_58INCH ? 20 : 7.5f;
     
     self.playerButton.center = CGPointMake(width * 0.5, height * 0.5 - offsetCenterY);
     

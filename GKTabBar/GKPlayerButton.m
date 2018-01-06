@@ -48,7 +48,7 @@
         self.playImgView.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
         self.coverImgView.center = self.playImgView.center;
         
-        self.radius      = 25.0f;
+        self.radius      = IS_58INCH ? 28.0f : 25.0f;
         self.lineWidth   = 3.0f;
         self.strokeColor = [UIColor redColor];
     }
