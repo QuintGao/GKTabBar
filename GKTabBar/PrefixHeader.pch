@@ -1,0 +1,23 @@
+//
+//  PrefixHeader.pch
+//  GKTabBar
+//
+//  Created by QuintGao on 2017/12/26.
+//  Copyright © 2017年 QuintGao. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#define kScreenW            [UIScreen mainScreen].bounds.size.width
+#define kScreenH            [UIScreen mainScreen].bounds.size.height
+
+#define SYSTEM_VER      [[[UIDevice currentDevice] systemVersion] floatValue]
+
+#define IS_58INCH       [UIScreen mainScreen].bounds.size.height == 812.0f
+
+// 适配比例
+#define kAdaptationRation   kScreenW / 750.0f
+#define kTabBarHeight       SYSTEM_VER >= 11.0 ? 83.0f : 49.0f
+
+#endif /* PrefixHeader_pch */
