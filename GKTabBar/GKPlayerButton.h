@@ -12,6 +12,8 @@
 
 + (instancetype)sharedInstance;
 
+@property (nonatomic, assign, readonly) BOOL isRotation;
+
 /** 半径 */
 @property (nonatomic, assign) CGFloat radius;
 
@@ -23,6 +25,11 @@
 
 @property (nonatomic, copy) void (^btnClickBlock)(void);
 
+#pragma mark - 不影响进度
+- (void)startRotation;
+- (void)stopRotation;
+
+// 无数据时显示默认图片
 - (void)setNoHistoryData;
 
 - (void)setImageUrl:(NSString *)imgUrl;

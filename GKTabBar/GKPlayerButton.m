@@ -10,9 +10,10 @@
 
 @interface GKPlayerButton()
 
+@property (nonatomic, assign) BOOL isRotation;
+
 @property (nonatomic, strong) CAShapeLayer *animatedLayer;
 @property (nonatomic, strong) CADisplayLink *displayLink;
-@property (nonatomic, assign) BOOL isRotation;
 
 @property (nonatomic, strong) UIImageView *coverImgView;
 @property (nonatomic, strong) UIImageView *playImgView;
@@ -127,6 +128,31 @@
 }
 
 #pragma mark - Public Methods
+- (void)startRotation {
+    if (self.isRotation) return;
+    
+    self.isRotation         = YES;
+    self.playImgView.hidden = YES;
+    
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(rotationAnimation)];
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void)stopRotation {
+    if (!self.isRotation) return;
+    
+    self.isRotation = NO;
+    
+    self.playImgView.hidden = NO;
+    
+    [self.displayLink invalidate];
+    self.displayLink = nil;
+    
+    // 恢复图片位置
+    self.imageView.transform = CGAffineTransformIdentity;
+}
+
+
 /**
  没有历史播放数据时调用
  */
@@ -142,32 +168,20 @@
     [CATransaction commit];
     
     if (animated) {
-        if (self.isRotation) return;
-        
-        self.isRotation = YES;
-        self.playImgView.hidden = YES;
-        
-        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(rotationAnimation)];
-        [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        [self startRotation];
     }else {
-        if (!self.isRotation) return;
-        
-        self.isRotation = NO;
-        
-        self.playImgView.hidden = NO;
-        
-        [self.displayLink invalidate];
-        self.displayLink = nil;
-        
-        // 恢复图片位置
-        self.imageView.transform = CGAffineTransformIdentity;
+        [self stopRotation];
     }
 }
 
 - (void)setImageUrl:(NSString *)imgUrl {
     self.coverImgView.hidden = NO;
     
-    [self setImage:[UIImage imageNamed:@"dzq"] forState:UIControlStateNormal];
+    if ([imgUrl containsString:@"http"]) {
+        // 网络图片请求
+    }else {
+        [self setImage:[UIImage imageNamed:@"dzq"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)rotationAnimation {
